@@ -26,7 +26,7 @@ namespace app\index\controller;
 use think\Controller;
 use think\Db;
 
-class Index extends Controller
+class IndexController extends Controller
 {
     public function index()
     {
@@ -40,8 +40,21 @@ class Index extends Controller
 
     public function database()
     {
-        $data = Db::name('think_data')->find();
-        $this->assign('result', $data);
-        return $this->fetch();
+//        $data = Db::name('think_data')->find();
+//        $this->assign('result', $data);
+//        return $this->fetch();
+
+//        // 查询数据
+//        $result = Db::query('select * from think_data where id = 3');
+//        dump($result);
+
+        // 查询数据
+        $list = Db::table('think_data')
+//            ->where('id', 3)
+            ->select();
+
+//        print_r($list);
+        return json(array("data" => $list));
     }
+
 }

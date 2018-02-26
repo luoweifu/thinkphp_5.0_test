@@ -8,7 +8,7 @@
 
 namespace app\index\controller;
 
-class Blog
+class BlogController
 {
 
     public function get($id)

@@ -9,7 +9,7 @@
 namespace app\index\controller;
 
 
-class HelloWorld
+class HelloWorldController
 {
     public function index($name = 'World')
     {

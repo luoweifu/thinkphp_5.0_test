@@ -9,7 +9,7 @@
 namespace app\index\controller;
 
 
-class Base
+class BaseController
 {
 
 }
