@@ -10,6 +10,7 @@ namespace app\index\controller;
 
 
 use think\Controller;
+use think\Cache\driver\Redis;
 
 
 class BaseClass
@@ -36,7 +37,7 @@ class SubClass extends BaseClass
 class TestController extends Controller
 {
 
-    private function testTime()
+    public function testTime()
     {
         $params = [];
         $tid = 1005;
@@ -50,6 +51,51 @@ class TestController extends Controller
         }
 
         echo(json_encode($params));
+    }
+
+    const ONE_DAY               = 86400;    // 1天的时间戳数值
+
+    public function testTimeTransfer()
+    {
+        $strRangeDate = ["2018-3-12", "2018-4-2"];
+        $strRangeTime = ["18:00", "22:30"];
+        $rangeDate = [
+            strtotime($strRangeDate[0]),
+            strtotime($strRangeDate[1])
+        ];
+        var_dump($rangeDate);
+
+        // 当天0:0:0的时间戳
+        $dayStartStamp = strtotime(date("Y-m-d",time()));
+        // 0:0:0 到的$strRangeTime[0]（18:00）的秒数
+        $timeStampRange = [
+            strtotime($strRangeTime[0]) - $dayStartStamp,
+            strtotime($strRangeTime[1]) - $dayStartStamp
+        ];
+        var_dump($timeStampRange);
+
+        $result = [];
+        $day = $rangeDate[0];
+        while($day < $rangeDate[1] + self::ONE_DAY){
+            $rangeTime = [
+                $day + $timeStampRange[0],
+                $day + $timeStampRange[1],
+            ];
+            $result[] = $rangeTime;
+//            $result = array_merge($result, $rangeTime);
+            $day += self::ONE_DAY;
+        }
+        var_dump($result);
+//        $neResult = [];
+//        foreach ($result as $e)
+//        {
+//            $item = [
+//                date('Y-m-d H:i:s', $e[0]),
+//                date('Y-m-d H:i:s', $e[1])
+//            ];
+//            $neResult[] = $item;
+//        }
+//        var_dump($neResult);
     }
 
     public function testCallback()
@@ -95,10 +141,32 @@ class TestController extends Controller
         echo "<br/>";
         print_r(array_merge($arr2, $arr));
         echo "<br/>";
+        $arr3 = array("key1" => 1, "key2" => 2, "key3" => 3);
+        $result = array_search(3, $arr3 );
+        echo "result:" . $result . "<br/>";
+        $arr3[1][] = 7;
+        $arr3[1][] = 8;
+        print_r($arr3);
     }
 
     public function testTimeZone()
     {
         echo date('Z') / 3600;
+    }
+
+    public function testRedis()
+    {
+        //连接本地的 Redis 服务
+        $redis = new Redis();
+        if($redis)
+        {
+            echo "Connection to server successful.";
+        } else
+        {
+            echo "Connection to server successful.";
+            exit();
+        }
+        $redis->set("text", "Spencer");
+        echo "text:". $redis->get("name");
     }
 }
