@@ -149,6 +149,14 @@ class TestController extends Controller
         print_r($arr3);
     }
 
+    public function testArrayToJson()
+    {
+        $arr1= [1, 2, 3];
+//        return json_encode($arr1);
+        $arr2 = ["key1"=>1, "key2"=>2, "key3"=>3];
+        return json_encode($arr2);
+    }
+
     public function testTimeZone()
     {
         echo date('Z') / 3600;
