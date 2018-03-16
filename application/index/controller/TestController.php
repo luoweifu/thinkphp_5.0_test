@@ -177,4 +177,6 @@ class TestController extends Controller
         $redis->set("text", "Spencer");
         echo "text:". $redis->get("name");
     }
+    
+    // add test content.
 }
