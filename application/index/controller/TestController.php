@@ -188,4 +188,5 @@ class TestController extends Controller
     // test commit 2
     // test commit 3
     // test 1
+    // test 2
 }
