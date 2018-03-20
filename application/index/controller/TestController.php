@@ -177,12 +177,10 @@ class TestController extends Controller
         $redis->set("text", "Spencer");
         echo "text:". $redis->get("name");
     }
-    // local change 1
-    // local change 2
-    // local change 3
-    // local change 4
 
-    // origin change 1
-    // origin change 2
-    // origin change 3
+    public function testEmptyAndNull()
+    {
+        $var = '';
+        echo ($var !== '') ? 'Is not empty!' : 'Is empty!';
+    }
 }
